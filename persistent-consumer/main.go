@@ -55,9 +55,9 @@ func main() {
 	// You only need to declare it once.
 	// If you modify the amqp.Table value and declare it again, an error will be returned.
 	q, err := ch.QueueDeclare(
-		exchangeName+"-"+eventTypeChangeset, // Declare the queue with a fixed name. You can customize it
-		true,                                // need durable
-		false,                               // close AD because msg need to persistent
+		exchangeName+"-"+eventTypeChangeset+"-"+"persistent", // Declare the queue with a fixed name. You can customize it
+		true,  // need durable
+		false, // close AD because msg need to persistent
 		false,
 		false,
 		amqp.Table{
@@ -81,7 +81,7 @@ func main() {
 
 	delivery, err := ch.Consume(
 		q.Name,
-		"myConsumer",
+		"myConsumer-persistent",
 		true,
 		false,
 		false,

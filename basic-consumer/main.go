@@ -72,7 +72,7 @@ func main() {
 
 	delivery, err := ch.Consume(
 		q.Name,
-		"myConsumer",
+		"myConsumer-basic",
 		true,
 		false,
 		false,
