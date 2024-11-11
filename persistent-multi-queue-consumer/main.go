@@ -46,22 +46,6 @@ func main() {
 		go func(queueID int) {
 			defer wg.Done()
 
-			// Univer server will declare the exchange after bootstrap, so you don't need to declare it here.
-			// In certain situations, if you want to declare it in advance,
-			// please ensure the parameters are consistent with the following code.
-			// err = ch.ExchangeDeclare(
-			// 	exchangeName, // name
-			// 	"topic",      // type
-			// 	true,         // durable
-			// 	false,         // auto-deleted
-			// 	false,        // internal
-			// 	false,        // no-wait
-			// 	nil,
-			// )
-			// if err != nil {
-			// 	log.Fatalf("ExchangeDeclare error: %s", err)
-			// }
-
 			// You only need to declare it once.
 			// If you modify the amqp.Table value and declare it again, an error will be returned.
 			queueName := exchangeName + "-" + eventTypeChangeset + "-" + strconv.Itoa(queueID)
