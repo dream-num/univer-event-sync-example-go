@@ -1,5 +1,5 @@
 /*
-This is a simple example of a RabbitMQ consumer that listens to the changeset event.
+This is a persistent simple example of a RabbitMQ consumer that listens to the changeset event.
 The consumer listens to the univer-event-sync.changeset topic and prints the changeset event to the console.
 */
 package main
@@ -52,9 +52,18 @@ func main() {
 	// 	log.Fatalf("ExchangeDeclare error: %s", err)
 	// }
 
+	// You only need to declare it once.
+	// If you modify the amqp.Table value and declare it again, an error will be returned.
 	q, err := ch.QueueDeclare(
-		"", // use an auto-generated queue name
-		false, true, false, false, nil,
+		exchangeName+"-"+eventTypeChangeset+"-"+"persistent", // Declare the queue with a fixed name. You can customize it
+		true,  // need durable
+		false, // close AD because msg need to persistent
+		false,
+		false,
+		amqp.Table{
+			// When the 100001th message arrives, the queue discards the oldest message according to the FIFO principle
+			"x-max-length": 100000,
+		},
 	)
 	if err != nil {
 		log.Fatalf("QueueDeclare error: %s", err)
@@ -72,7 +81,7 @@ func main() {
 
 	delivery, err := ch.Consume(
 		q.Name,
-		"myConsumer",
+		"myConsumer-persistent",
 		true,
 		false,
 		false,
