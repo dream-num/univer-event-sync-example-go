@@ -89,6 +89,7 @@ func main() {
 			if err := json.Unmarshal(msg.Body, &event); err != nil {
 				log.Printf("Error: %s", err)
 			}
+			log.Printf("traceId:%s\n", msg.Headers["trace-id"])
 			switch event.EventType {
 			case eventTypeChangeset:
 				// Do something with the changeset event
