@@ -40,34 +40,31 @@ Before run the example, put the correct RabbitMQ url to env `RABBITMQ_URL`.
 
 Otherwise, the program will use `amqp://guest:guest@localhost:5672/` by default.
 
-Basic Consumer
+**Basic consumer**
 
 This is a basic RabbitMQ consumer example that listens to the univer-event-sync.changeset topic and prints the events to the console.
 
-To run the basic consumer:
 ```bash
 # export RABBITMQ_URL=${THE_RABBITMQ_URL}
 cd basic-consumer
 go run main.go
 ```
 
-Persistent Consumer
+**Persistent queue consumer**
 
 This is a RabbitMQ consumer example with message persistence. The queue is set with a maximum length of 100000 messages.
 
-To run the persistent consumer:
 ```bash
 # export RABBITMQ_URL=${THE_RABBITMQ_URL}
 cd persistent-consumer
 go run main.go
 ```
 
-Persistent multi-queue Consumer
+**Persistent multi-queue consumer**
 
 This is a RabbitMQ example with multiple consumers listening to different queues. Each queue can consume the full amount of data in the exchange.
 At the same time, it also supports message persistence.
 
-To run the multi-queue consumer:
 ```bash
 # export RABBITMQ_URL=${THE_RABBITMQ_URL}
 cd persistent-multi-queue-consumer
